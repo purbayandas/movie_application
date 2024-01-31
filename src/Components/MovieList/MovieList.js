@@ -1,18 +1,18 @@
-import React from "react";
 import MovieCard from "../MovieCard/MovieCard";
 import movieData from "../MovieData/MovieData";
 import './MovieListStyles.css';
-
-import Hook from "../SearchBox/Hookfile";
+import SearchBox from "../SearchBox/SearchBox";
+import React, { useState } from "react";
 
 function MovieList(){
+
+    let [input, setInput] =  useState("");  
     
-    let {input, setInput} = Hook();
-    console.log(input);
     let movie_array = movieData["results"];
     let filtered_movies = movie_array.filter((movie) => {
-        return movie["original_title"].toLowerCase().startsWith(input);
+        return movie["original_title"].toLowerCase().startsWith(input.toLowerCase());
     });
+  
     
     let moviesArr = filtered_movies.map((movie) => {
         return (
@@ -28,13 +28,15 @@ function MovieList(){
         </div>
         );        
     });   
-
+ 
     return (
-        <div className="MovieContainer">          
-            
-            {moviesArr}
-        
+        <div> 
+            <SearchBox onInputChange={setInput}/>
+            <div className="MovieContainer">        
+                {moviesArr}            
+            </div>
         </div>
+
         
     )
 }
